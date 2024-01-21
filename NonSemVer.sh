@@ -16,18 +16,18 @@ if [[ ! $version =~ $regex ]]; then
 fi
 
 # Parse version components
-customer="$(remove_leading_zeros "${BASH_REMATCH[1]}")"
+prefix="$(remove_leading_zeros "${BASH_REMATCH[1]}")"
 year="$(remove_leading_zeros "${BASH_REMATCH[2]}")"
 majmin="$(remove_leading_zeros "${BASH_REMATCH[3]}")"
 major=$(($majmin / 100))
 minor=$(($majmin % 100))
 
 # Output parsed version
-printf "%02d.%02d.%02d%02d\n" "$customer" "$year" "$major" "$minor"
+printf "%02d.%02d.%02d%02d\n" "$prefix" "$year" "$major" "$minor"
 
 # Verbose output
 echo ""
-printf "Customer ID:\t\t%d\n" "$customer"
+printf "Project ID:\t\t%d\n" "$prefix"
 printf "Deployment year:\t20%02d\n" "$year"
 printf "Major version:\t\t%d\n" "$major"
 printf "Minor version:\t\t%d\n" "$minor"
