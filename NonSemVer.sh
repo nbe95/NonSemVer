@@ -4,7 +4,7 @@
 set -e
 
 # Reusable functions
-usage() { echo "Usage: $(basename "$0") [-h|--help] [-v|--verbose] [-i|--integer] [--major|--minor|--patch] [VERSION]" 1>&2; exit 0; }
+usage() { echo "Usage: $(basename "$0") [-h|--help] [-v|--verbose] [-i|--integer] [--major|--minor] [VERSION]" 1>&2; exit 0; }
 trim_leading_zeros() { echo "$1" | sed 's/^0\+\(.\)/\1/'; }
 
 # Parse argument options
@@ -12,7 +12,6 @@ VERBOSE=false
 INTEGER=false
 BUMP_MAJOR=false
 BUMP_MINOR=false
-BUMP_PATCH=false
 while true; do
   case "$1" in
     -h | --help ) usage ;;
@@ -20,7 +19,6 @@ while true; do
     -i | --integer ) INTEGER=true; shift ;;
     --major ) BUMP_MAJOR=true; shift ;;
     --minor ) BUMP_MINOR=true; shift ;;
-    --patch ) BUMP_PATCH=true; shift ;;
     * ) break ;;
   esac
 done
@@ -58,6 +56,24 @@ fi
 # Parse remaining components
 major=$(($majmin / 100))
 minor=$(($majmin % 100))
+
+# Perform version bump if requested
+if $BUMP_MAJOR || $BUMP_MINOR; then
+    current_year="$(date +"%y")"
+    if [[ "$year" < "$current_year" ]]; then
+        # Year has changed -> reset all
+        year="$current_year"
+        major=1
+        minor=0
+    elif $BUMP_MAJOR; then
+        # Bump major, reset minor
+        major="$(($major + 1))"
+        minor=0
+    else
+        # Bump minor
+        minor="$(($minor + 1))"
+    fi
+fi
 
 # Output parsed version
 if $INTEGER; then
