@@ -3,9 +3,9 @@
 # Abort on error
 set -e
 
-# Reusable functions
-usage() { echo "Usage: $(basename "$0") [-h|--help] [-v|--verbose] [-i|--integer] [--major|--minor] [VERSION]" 1>&2; exit 0; }
+# shellcheck disable=SC2001
 trim_leading_zeros() { echo "$1" | sed 's/^0\+\(.\)/\1/'; }
+usage() { echo "Usage: $(basename "$0") [-h|--help] [-v|--verbose] [-i|--integer] [--major|--minor] [VERSION]" 1>&2; exit 0; }
 
 # Parse argument options
 VERBOSE=false
@@ -45,6 +45,7 @@ else
         echo "Version tag '$version' has invalid format."
         exit 2
     fi
+    # shellcheck disable=SC2001
     version="$(echo "$version" | sed 's/[^0-9]//g')"
     printf -v version "%08d" "$(trim_leading_zeros "$version")"
 
@@ -54,8 +55,8 @@ else
 fi
 
 # Parse remaining components
-major=$(($majmin / 100))
-minor=$(($majmin % 100))
+major=$((majmin / 100))
+minor=$((majmin % 100))
 
 # Perform version bump if requested
 if $BUMP_MAJOR || $BUMP_MINOR; then
@@ -67,21 +68,25 @@ if $BUMP_MAJOR || $BUMP_MINOR; then
         minor=0
     elif $BUMP_MAJOR; then
         # Bump major, reset minor
-        major="$(($major + 1))"
+        major="$((major + 1))"
         minor=0
     else
         # Bump minor
-        minor="$(($minor + 1))"
+        minor="$((minor + 1))"
     fi
+fi
+
+if [ "$major" -gt 99 ] || [ "$minor" -gt 99 ]; then
+    echo "Cannot bump version number, because numerical limit is reached."
+    exit 3
 fi
 
 # Output parsed version
 if $INTEGER; then
-    out_format="%02d%02d%02d%02d\n"
+    printf "%02d%02d%02d%02d\n" "$prefix" "$year" "$major" "$minor"
 else
-    out_format="%02d.%02d.%02d%02d\n"
+    printf "%02d.%02d.%02d%02d\n" "$prefix" "$year" "$major" "$minor"
 fi
-printf "$out_format" "$prefix" "$year" "$major" "$minor"
 
 # Verbose output
 if $VERBOSE; then
