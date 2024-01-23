@@ -4,7 +4,26 @@
 set -e
 
 # Reusable functions
+usage() { echo "Usage: $(basename "$0") [-h|--help] [-v|--verbose] [-i|--integer] [--major|--minor|--patch] [VERSION]" 1>&2; exit 0; }
 trim_leading_zeros() { echo "$1" | sed 's/^0\+\(.\)/\1/'; }
+
+# Parse argument options
+VERBOSE=false
+INTEGER=false
+BUMP_MAJOR=false
+BUMP_MINOR=false
+BUMP_PATCH=false
+while true; do
+  case "$1" in
+    -h | --help ) usage ;;
+    -v | --verbose ) VERBOSE=true; shift ;;
+    -i | --integer ) INTEGER=true; shift ;;
+    --major ) BUMP_MAJOR=true; shift ;;
+    --minor ) BUMP_MINOR=true; shift ;;
+    --patch ) BUMP_PATCH=true; shift ;;
+    * ) break ;;
+  esac
+done
 
 # Get version from CLI argument, otherwise ask git
 version="$1"
@@ -41,11 +60,18 @@ major=$(($majmin / 100))
 minor=$(($majmin % 100))
 
 # Output parsed version
-printf "%02d.%02d.%02d%02d\n" "$prefix" "$year" "$major" "$minor"
+if $INTEGER; then
+    out_format="%02d%02d%02d%02d\n"
+else
+    out_format="%02d.%02d.%02d%02d\n"
+fi
+printf "$out_format" "$prefix" "$year" "$major" "$minor"
 
 # Verbose output
-echo ""
-printf "Project ID:\t\t%d\n" "$prefix"
-printf "Deployment year:\t20%02d\n" "$year"
-printf "Major version:\t\t%d\n" "$major"
-printf "Minor version:\t\t%d\n" "$minor"
+if $VERBOSE; then
+    echo ""
+    printf "Project ID:\t\t%d\n" "$prefix"
+    printf "Deployment year:\t20%02d\n" "$year"
+    printf "Major version:\t\t%d\n" "$major"
+    printf "Minor version:\t\t%d\n" "$minor"
+fi
