@@ -75,6 +75,11 @@ if $BUMP_MAJOR || $BUMP_MINOR; then
     fi
 fi
 
+if [ "$major" -gt 99 ] || [ "$minor" -gt 99 ]; then
+    echo "Cannot bump version number, because numerical limit is reached."
+    exit 3
+fi
+
 # Output parsed version
 if $INTEGER; then
     out_format="%02d%02d%02d%02d\n"
