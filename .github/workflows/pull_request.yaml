@@ -10,7 +10,7 @@ on:
 
 jobs:
   lint:
-    name: Check the shell code
+    name: Check shell code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,9 +18,11 @@ jobs:
         uses: ludeeus/action-shellcheck@master
 
   test:
-    name: Test the code
+    name: Run unit tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
       - name: Run ShellCheck
-        run: tests/unit-test.sh
+        run: ./tests/unit-test.sh
