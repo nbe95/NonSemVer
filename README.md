@@ -13,12 +13,10 @@ This makes it ideal for use in CI pipelines and other automation workflows.
 
 ## The scheme
 
-```txt
-PP.CC.MMmm-BBBB
-|  |  | |  |
-|  |  | |  +---- Build sequence
-|  |  | +------- Minor component
-|  |  +--------- Major component
-|  +------------ Cycle identifier
-+--------------- Version prefix
-```
+    PP.CC.MMmm-BBBB
+    |  |  | |  |
+    |  |  | |  +---- Build sequence
+    |  |  | +------- Minor component
+    |  |  +--------- Major component
+    |  +------------ Cycle identifier
+    +--------------- Version prefix
