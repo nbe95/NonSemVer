@@ -13,12 +13,10 @@ This makes it ideal for use in CI pipelines and other automation workflows.
 
 ## The scheme
 
-```txt
-PP.YY.MMmm-BBBB
-|  |  | |  |
-|  |  | |  +---- Build number
-|  |  | +------- Minor release
-|  |  +--------- Major release
-|  +------------ Year of deployment
-+--------------- Prefix/project identifier
-```
+    PP.YY.MMmm-BBBB
+    |  |  | |  |
+    |  |  | |  +---- Build number
+    |  |  | +------- Minor release
+    |  |  +--------- Major release
+    |  +------------ Year of deployment
+    +--------------- Prefix/project identifier
