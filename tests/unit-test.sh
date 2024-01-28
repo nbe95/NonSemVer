@@ -25,7 +25,15 @@ assert_eq "$($NONSEMVER 0             )" "00.00.0000" "invalid"
 assert_eq "$($NONSEMVER 1             )" "00.00.0001" "invalid"
 assert_eq "$($NONSEMVER 00.00.1234    )" "00.00.1234" "invalid"
 assert_eq "$($NONSEMVER 0.6.9         )" "00.06.0009" "invalid"
-assert_eq "$($NONSEMVER 00.42.00      )" "00.42.0000" "invalid"-
+assert_eq "$($NONSEMVER 00.42.00      )" "00.42.0000" "invalid"
+assert_eq "$($NONSEMVER 99.00.0       )" "99.00.0000" "invalid"
+assert_eq "$($NONSEMVER 12.34.5678    )" "12.34.5678" "invalid"
+assert_eq "$($NONSEMVER 99.99.9999    )" "99.99.9999" "invalid"
+
+
+# Basic integer notation
+assert_eq "$($NONSEMVER 0             )" "00.00.0000" "invalid"
+assert_eq "$($NONSEMVER 1             )" "00.00.0001" "invalid"
 assert_eq "$($NONSEMVER 420000        )" "00.42.0000" "invalid"
 assert_eq "$($NONSEMVER 69000000      )" "69.00.0000" "invalid"
 assert_eq "$($NONSEMVER 12345678      )" "12.34.5678" "invalid"
@@ -45,7 +53,17 @@ CY="$(date +"%y")"
 NY=$((CY + 1))
 PY=$((CY - 1))
 
-# Version bump-
+# Version bump
+assert_eq "$($NONSEMVER --major 12.34.9956    &> /dev/null)$?" "3" "invalid"
+assert_eq "$($NONSEMVER --minor 12.34.5699    &> /dev/null)$?" "3" "invalid"
+
+assert_eq "$($NONSEMVER --major "00.00.0000"  )" "00.$CY.0100" "invalid"
+assert_eq "$($NONSEMVER --major "42.$PY.1234" )" "42.$CY.0100" "invalid"
+assert_eq "$($NONSEMVER --major "01.$NY.2468" )" "01.$NY.2500" "invalid"
+assert_eq "$($NONSEMVER --minor "69.00.0000"  )" "69.$CY.0100" "invalid"
+assert_eq "$($NONSEMVER --minor "99.$PY.9999" )" "99.$CY.0100" "invalid"
+assert_eq "$($NONSEMVER --minor "01.$NY.2468" )" "01.$NY.2469" "invalid"
+
 assert_eq "$($NONSEMVER --major "00.$CY.0000" )" "00.$CY.0100" "invalid"
 assert_eq "$($NONSEMVER --major "12.$CY.3456" )" "12.$CY.3500" "invalid"
 assert_eq "$($NONSEMVER --major "78.$CY.9012" )" "78.$CY.9100" "invalid"
