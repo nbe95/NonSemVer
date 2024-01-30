@@ -20,3 +20,47 @@ With such unconventional principles, `NonSemVer.sh` can correctly display, parse
 version numbers as needed.
 
 This makes it ideal for use in CI pipelines and other automation workflows.
+
+### Features and examples
+
+- Parse version tags in dot-style or integer notation
+
+        $ ./NonSemVer.sh 12.34.5678
+        12.34.5678
+        $ ./NonSemVer.sh 12345
+        00.01.2345
+
+- Return a bare integer version tag with `-i` or `--integer`
+
+        $ ./NonSemVer.sh -i 9.08.0007
+        9080007
+
+- Print verbose and human-readable information with `-v` or `--verbose`
+
+        $ ./NonSemVer.sh -i -v 00.42.0069
+        420069
+
+        Project ID:         0
+        Deployment year:    2042
+        Major version:      42
+        Minor version:      69
+
+- When running in a Git repository, automatically fetch the latest tag as
+  version identifier
+
+        $ git tag
+        1.2.30
+        $ ./NonSemVer.sh
+        01.02.0030
+
+- Extra fancy: Increment version numbers (also handles year update!)
+
+        $ ./NonSemVer.sh --minor 11.23.0607
+        11.23.0700
+        $ ./NonSemVer.sh --major 11.23.0607
+        11.23.0608
+        $ ./NonSemVer.sh --minor 11.00.0607
+        11.23.0100
+
+Run `./NonSemVer.sh --help` or take a look at the unit tests to see all available
+options.
