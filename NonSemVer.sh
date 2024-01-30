@@ -84,7 +84,7 @@ fi
 # Output parsed version
 if $INTEGER; then
     printf -v output "%02d%02d%02d%02d\n" "$prefix" "$cycle" "$major" "$minor"
-    echo "$(trim_leading_zeros "$output")"
+    trim_leading_zeros "$output"
 else
     printf "%02d.%02d.%02d%02d\n" "$prefix" "$cycle" "$major" "$minor"
 fi
