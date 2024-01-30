@@ -25,4 +25,4 @@ jobs:
         with:
           submodules: true
       - name: Run ShellCheck
-        run: ./tests/unit-test.sh
+        run: ./tests/run.sh
