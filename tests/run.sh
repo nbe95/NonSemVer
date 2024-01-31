@@ -1,21 +1,14 @@
 #!/bin/bash
 
-DIR="$(dirname "$0")"
-NONSEMVER="$DIR/../NonSemVer.sh"
+dir="$(dirname "$0")"
+NONSEMVER="$dir/../NonSemVer.sh"
 export NONSEMVER
 
-source "$DIR/assert/assert.sh"
+source "$dir/assert/assert.sh"
 
-# Prepare current, next and previous year as variables
-CY="$(date +"%y")"
-NY=$((CY + 1))
-PY=$((CY - 1))
-export CY
-export NY
-export PY
 
 # Run separate unit tests
-source "$DIR/test-git.sh"
-source "$DIR/test-args.sh"
-source "$DIR/test-parse.sh"
-source "$DIR/test-bump.sh"
+source "$dir/test-git.sh"
+source "$dir/test-args.sh"
+source "$dir/test-parse.sh"
+source "$dir/test-bump.sh"
