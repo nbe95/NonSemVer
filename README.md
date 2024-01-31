@@ -39,12 +39,12 @@ This makes it ideal for use in CI pipelines and other automation workflows.
 
 - Print verbose and human-readable information with `-v` or `--verbose`
 
-        $ ./NonSemVer.sh -i -v 00.42.0069
-        420069
+        $ ./NonSemVer.sh -i -v 01.42.5069
+        1425069
 
-        Project ID:         0
+        Project ID:         1
         Deployment year:    2042
-        Major version:      42
+        Major version:      50
         Minor version:      69
 
 - When running in a Git repository, automatically fetch the latest tag as
