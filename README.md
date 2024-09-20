@@ -8,8 +8,8 @@ Sometimes legacy systems or technical constraints lead to versioning schemes not
     PP.YY.MMmm-BBBB
     |  |  | |  |
     |  |  | |  +---- Build number
-    |  |  | +------- Minor release
-    |  |  +--------- Major release
+    |  |  | +------- Patch version
+    |  |  +--------- Minor version
     |  +------------ Year of deployment
     +--------------- Prefix/project identifier
 
@@ -42,13 +42,12 @@ This makes it ideal for use in CI pipelines and other automation workflows.
         $ ./NonSemVer.sh -i -v 01.42.5069
         1425069
 
-        Project ID:         1
-        Deployment year:    2042
-        Major version:      50
-        Minor version:      69
+        Project ID:     1
+        Deployment:     2042
+        Minor:          50
+        Patch:          69
 
-- When running in a Git repository, automatically fetch the latest tag as
-  version identifier:
+- When running in a Git repository, automatically fetch the latest tag as version identifier:
 
         $ git tag
         1.2.30
@@ -57,12 +56,11 @@ This makes it ideal for use in CI pipelines and other automation workflows.
 
 - Increment version numbers (with respect to the current year, e.g. 2023):
 
-        $ ./NonSemVer.sh --minor 11.23.0607
+        $ ./NonSemVer.sh --bump-minor 11.23.0607
         11.23.0700
-        $ ./NonSemVer.sh --major 11.23.0607
+        $ ./NonSemVer.sh --bump-major 11.23.0607
         11.23.0608
-        $ ./NonSemVer.sh --minor 11.20.1234
+        $ ./NonSemVer.sh --bump-minor 11.20.1234
         11.23.0100
 
-Run `./NonSemVer.sh --help` or take a look at the unit tests to see all available
-options.
+Run `./NonSemVer.sh --help` or take a look at the unit tests to see all available options.
