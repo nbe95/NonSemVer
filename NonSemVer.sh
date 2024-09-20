@@ -34,14 +34,14 @@ if [[ -z "$version" ]]; then
 fi
 
 # Try to match dot form
-if [[ "$version" =~ ^([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,4})$ ]]; then
+if [[ "$version" =~ ^v?([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,4})$ ]]; then
     prefix="$(trim_leading_zeros "${BASH_REMATCH[1]}")"
     major="$(trim_leading_zeros "${BASH_REMATCH[2]}")"
     minor_patch="$(trim_leading_zeros "${BASH_REMATCH[3]}")"
 
 else
     # Match an integer else (pad with zeros and replace anything but numbers)
-    if [[ ! "$version" =~ ^[0-9]{1,8}$ ]]; then
+    if [[ ! "$version" =~ ^v?[0-9]{1,8}$ ]]; then
         echo "Version tag '$version' has invalid format."
         exit 2
     fi
