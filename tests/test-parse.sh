@@ -10,6 +10,16 @@ assert_eq "$($NONSEMVER 99.00.0       )" "99.00.0000" "Dot notation parsing"
 assert_eq "$($NONSEMVER 12.34.5678    )" "12.34.5678" "Dot notation parsing"
 assert_eq "$($NONSEMVER 99.99.9999    )" "99.99.9999" "Dot notation parsing"
 
+assert_eq "$($NONSEMVER v0            )" "00.00.0000" "Dot notation parsing"
+assert_eq "$($NONSEMVER v1            )" "00.00.0001" "Dot notation parsing"
+assert_eq "$($NONSEMVER v00.00.1234   )" "00.00.1234" "Dot notation parsing"
+assert_eq "$($NONSEMVER v0.6.9        )" "00.06.0009" "Dot notation parsing"
+assert_eq "$($NONSEMVER v00.42.00     )" "00.42.0000" "Dot notation parsing"
+assert_eq "$($NONSEMVER v99.00.0      )" "99.00.0000" "Dot notation parsing"
+assert_eq "$($NONSEMVER v12.34.5678   )" "12.34.5678" "Dot notation parsing"
+assert_eq "$($NONSEMVER v99.99.9999   )" "99.99.9999" "Dot notation parsing"
+
+
 
 # Check integer parsing and output
 assert_eq "$($NONSEMVER 0             )" "00.00.0000" "Integer parsing"
@@ -18,6 +28,13 @@ assert_eq "$($NONSEMVER 420000        )" "00.42.0000" "Integer parsing"
 assert_eq "$($NONSEMVER 69000000      )" "69.00.0000" "Integer parsing"
 assert_eq "$($NONSEMVER 12345678      )" "12.34.5678" "Integer parsing"
 assert_eq "$($NONSEMVER 99999999      )" "99.99.9999" "Integer parsing"
+
+assert_eq "$($NONSEMVER v0            )" "00.00.0000" "Integer parsing"
+assert_eq "$($NONSEMVER v1            )" "00.00.0001" "Integer parsing"
+assert_eq "$($NONSEMVER v420000       )" "00.42.0000" "Integer parsing"
+assert_eq "$($NONSEMVER v69000000     )" "69.00.0000" "Integer parsing"
+assert_eq "$($NONSEMVER v12345678     )" "12.34.5678" "Integer parsing"
+assert_eq "$($NONSEMVER v99999999     )" "99.99.9999" "Integer parsing"
 
 assert_eq "$($NONSEMVER -i 0          )"        "0" "Integer output"
 assert_eq "$($NONSEMVER -i 1          )"        "1" "Integer output"
