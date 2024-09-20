@@ -25,10 +25,12 @@ This makes it ideal for use in CI pipelines and other automation workflows.
 
 - Parse version tags in dot-style or integer notation:
 
-        $ ./NonSemVer.sh 12.34.5678
+        $ ./NonSemVer.sh v12.34.5678
         12.34.5678
-        $ ./NonSemVer.sh 12345
-        00.01.2345
+        $ ./NonSemVer.sh 98.76.5432
+        98.76.5432
+        $ ./NonSemVer.sh 24681012
+        24.68.1012
 
 - Return bare integer version tags with `-i` or `--integer`:
 
