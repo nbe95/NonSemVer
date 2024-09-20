@@ -8,8 +8,8 @@ Sometimes legacy systems or technical constraints lead to versioning schemes not
     PP.CC.MMmm-BBBB
     |  |  | |  |
     |  |  | |  +---- Build sequence
-    |  |  | +------- Minor component
-    |  |  +--------- Major component
+    |  |  | +------- Patch component
+    |  |  +--------- Minor component
     |  +------------ Cycle identifier
     +--------------- Version prefix
 
@@ -44,11 +44,10 @@ This makes it ideal for use in CI pipelines and other automation workflows.
 
         Version prefix:     1
         Cycle identifier:   2042
-        Major component:    50
-        Minor component:    69
+        Minor component:    50
+        Patch component:    69
 
-- When running in a Git repository, automatically fetch the latest tag as
-  version identifier:
+- When running in a Git repository, automatically fetch the latest tag as version identifier:
 
         $ git tag
         1.2.30
@@ -57,12 +56,11 @@ This makes it ideal for use in CI pipelines and other automation workflows.
 
 - Increment version numbers (with respect to the current year, e.g. 2023):
 
-        $ ./NonSemVer.sh --minor 11.23.0607
+        $ ./NonSemVer.sh --bump-minor 11.23.0607
         11.23.0700
-        $ ./NonSemVer.sh --major 11.23.0607
+        $ ./NonSemVer.sh --bump-patch 11.23.0607
         11.23.0608
-        $ ./NonSemVer.sh --minor 11.20.1234
+        $ ./NonSemVer.sh --bump-minor 11.20.1234
         11.23.0100
 
-Run `./NonSemVer.sh --help` or take a look at the unit tests to see all available
-options.
+Run `./NonSemVer.sh --help` or take a look at the unit tests to see all available options.
