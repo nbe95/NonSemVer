@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 dir="$(dirname "$0")"
 NONSEMVER="$dir/../NonSemVer.sh"
 export NONSEMVER
