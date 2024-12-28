@@ -8,8 +8,8 @@ py=$((cy - 1))
 
 
 # Check exceeding of version limits
-assert_eq "$($NONSEMVER --bump-minor 12.34.9956    &> /dev/null)$?" "3" "Version limit"
-assert_eq "$($NONSEMVER --bump-patch 12.34.5699    &> /dev/null)$?" "3" "Version limit"
+assert_eq "$($NONSEMVER --bump-minor 12.34.9956 &> /dev/null)$?" "3" "Version limit"
+assert_eq "$($NONSEMVER --bump-patch 12.34.5699 &> /dev/null)$?" "3" "Version limit"
 
 
 # Check minor/patch version bump
