@@ -27,4 +27,7 @@ jobs:
         with:
           submodules: true
       - name: Run unit tests
-        run: ./tests/run.sh
+        run: |
+          pwd
+          ls -al ./tests
+          ./tests/run.sh
