@@ -28,6 +28,6 @@ jobs:
           submodules: true
       - name: Run unit tests
         run: |
-          pwd
-          ls -al ./tests
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           ./tests/run.sh
