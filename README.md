@@ -1,6 +1,6 @@
 # NonSemVer
 
-## The problem
+## The Problem
 
 Sometimes legacy systems or technical constraints lead to versioning schemes not following
 [Semantic Versioning](http://semver.org/).
@@ -13,7 +13,7 @@ Sometimes legacy systems or technical constraints lead to versioning schemes not
     |  +------------ Cycle identifier
     +--------------- Version prefix
 
-## The solution
+## The Solution
 
 This shell script is useful for handling a versioning scheme not following common standards.
 With such unconventional principles, `NonSemVer.sh` can correctly display, parse, and even increment
@@ -21,7 +21,7 @@ version numbers as needed.
 
 This makes it ideal for use in CI pipelines and other automation workflows.
 
-### Features and examples
+### Features and Examples
 
 - Parse version tags in dot-style or integer notation:
 
@@ -47,7 +47,7 @@ This makes it ideal for use in CI pipelines and other automation workflows.
         Version prefix:     1
         Cycle identifier:   2042
         Minor component:    50
-        Patch component:    69
+        Bugfix component:   69
 
 - When running in a Git repository, automatically fetch the latest tag as version identifier:
 
@@ -60,7 +60,7 @@ This makes it ideal for use in CI pipelines and other automation workflows.
 
         $ ./NonSemVer.sh --bump-minor 11.23.0607
         11.23.0700
-        $ ./NonSemVer.sh --bump-patch 11.23.0607
+        $ ./NonSemVer.sh --bump-bugfix 11.23.0607
         11.23.0608
         $ ./NonSemVer.sh --bump-minor 11.20.1234
         11.23.0100
