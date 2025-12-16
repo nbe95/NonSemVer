@@ -9,7 +9,7 @@ standards and cut their own path.
     XX.YY.ZZzz-NNNN
     |  |  | |  |
     |  |  | |  +---- Build number (internal)
-    |  |  | +------- Patch release
+    |  |  | +------- Bugfix release
     |  |  +--------- Minor release
     |  +------------ Major release = year of deployment
     +--------------- Customer identification
@@ -48,7 +48,7 @@ This makes it the ideal tool for use in CI pipelines etc.
         Customer:       1
         Major:          2042
         Minor:          50
-        Patch:          69
+        Bugfix:         69
 
 - When running in a Git repository, automatically fetch the latest tag as version identifier:
 
@@ -61,7 +61,7 @@ This makes it the ideal tool for use in CI pipelines etc.
 
         $ ./version.sh --bump-minor 11.23.0607
         11.23.0700
-        $ ./version.sh --bump-major 11.23.0607
+        $ ./version.sh --bump-bugfix 11.23.0607
         11.23.0608
         $ ./version.sh --bump-minor 11.20.1234
         11.23.0100
