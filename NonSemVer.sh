@@ -4,7 +4,7 @@
 set -e
 
 # shellcheck disable=SC2001
-trim_leading_zeros() { echo "$1" | sed 's/^0\+\(.\)/\1/'; }
+trim_leading_zeros() { echo -n "$1" | sed 's/^0\+\(.\)/\1/'; }
 usage() { echo "Usage: $(basename "$0") [-h|--help] [-v|--verbose] [-i|--integer] [--bump-minor|--bump-bugfix] [VERSION]" 1>&2; exit 0; }
 
 # Parse argument options
@@ -74,10 +74,16 @@ if $BUMP_MINOR || $BUMP_BUGFIX; then
         # Bump bugfix
         bugfix="$((bugfix + 1))"
     fi
+
+    # Bump minor version if bugfix version > 97, since 98/99 are reserved for special cases
+    if [ "$bugfix" -gt 97 ]; then
+        minor="$((minor + 1))"
+        bugfix=0
+    fi
 fi
 
-if [ "$minor" -gt 99 ] || [ "$bugfix" -gt 99 ]; then
-    echo "Cannot bump version number, because numerical limit is reached."
+if [ "$minor" -gt 99 ]; then
+    echo "Cannot bump minor number, because numerical limit is reached."
     exit 3
 fi
 
