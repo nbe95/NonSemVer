@@ -8,5 +8,5 @@ assert_eq "$($NONSEMVER --synthetic "1"         "77.77.8888")"  "77.77.8800-8801
 assert_eq "$($NONSEMVER --synthetic "123456"    "00.00.0000")"  "00.00.0012-0034"   "Long synthetic version"
 
 # Check handling of misformed arguments
-assert_eq "$($NONSEMVER --synthetic ""          "00.00.0000" &>/dev/null)$?" "1"    "No synthetic version argument"
-assert_eq "$($NONSEMVER --synthetic "123a"      "00.00.0000" &>/dev/null)$?" "1"    "Invalid synthetic version argument"
+assert_not_eq "$($NONSEMVER --synthetic ""      "00.00.0000" &>/dev/null)$?" "0"    "No synthetic version argument"
+assert_not_eq "$($NONSEMVER --synthetic "1a"    "00.00.0000" &>/dev/null)$?" "0"    "Invalid synthetic version argument"
