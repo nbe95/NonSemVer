@@ -1,84 +1,93 @@
 # NonSemVer
 
-## The Problem
+## Overview
 
-Sometimes legacy systems or technical constraints lead to versioning schemes not following
-[Semantic Versioning](http://semver.org/).
+Not all systems can follow [Semantic Versioning](http://semver.org/), unfortunately.
+
+Legacy constraints, organizational requirements or historical decision sometimes result in custom
+version schemes not following common standards.
+
+`NonSemVer.sh` is a single shell script designed to parse, normalize, inspect, and manipulate a
+specific non-standard versioning scheme in a deterministic and user-friendly way.
+This makes it ideal for use in CI pipelines or other automation workflows.
+
+The version format is defined as follows:
 
     PP.YY.MMmm[-BBBB]
     |  |  | |   |
-    |  |  | |   +--- Build number
-    |  |  | +------- Patch version
+    |  |  | |   +--- Build number (optional)
+    |  |  | +------- Bugfix version
     |  |  +--------- Minor version
     |  +------------ Year of deployment
     +--------------- Prefix/project identifier
 
-## The Solution
+## Features and Examples
 
-This shell script is useful for handling a versioning scheme not following common standards.
-With such unconventional principles, `NonSemVer.sh` can correctly display, parse, and even increment
-version numbers as needed.
+> All CLI options listed below can be combined unless stated otherwise.
 
-This makes it ideal for use in CI pipelines and other automation workflows.
+For a complete list of available options, run `NonSemVer.sh --help` or take a look at the unit
+tests.
 
-### Features and Examples
+### Parsing and Output
 
-- Parse version tags in dot-style or integer notation:
+- Version tags can be parsed in both dot-style and integer notation:
 
-        $ ./NonSemVer.sh v12.34.5678        # dot-style with leading 'v'
-        12.34.5678
-        $ ./NonSemVer.sh 98.76.5432         # dot style as is
-        98.76.5432
-        $ ./NonSemVer.sh 24681012           # integer format
-        24.68.1012
-        $ ./NonSemVer.sh 1.2.3-4            # abbreviated dot-style
-        01.02.0003-0004
-        $ ./NonSemVer.sh 112233445566       # long numeric representation
-        11.22.3344-5566
+      $ ./NonSemVer.sh 12.34.5678         # dot-style
+      12.34.5678
+      $ ./NonSemVer.sh v98.76.5432        # dot style with leading 'v'
+      98.76.5432
+      $ ./NonSemVer.sh 24681012           # integer format
+      24.68.1012
+      $ ./NonSemVer.sh 1.2.3-4            # abbreviated dot-style
+      01.02.0003-0004
+      $ ./NonSemVer.sh 112233445566       # long numeric representation
+      11.22.3344-5566
 
-  Note that a version's build numbers is optional and will be printed only if provided.
+  Note that a version's build number is optional and will be printed only if specified.
 
-- Return bare integer version tags with `-i` or `--integer`:
+- Bare integer versions can be printed `-i` or `--integer`:
 
-        $ ./NonSemVer.sh -i 9.8.7-6
-        90800070006
-        $ ./NonSemVer.sh -i 00.00.0005
-        5
+      $ ./NonSemVer.sh -i 00.00.0005
+      5
+      $ ./NonSemVer.sh -i 9.8.7-6
+      90800070006
 
-- Print verbose and human-readable information with `-v` or `--verbose`
+- Verbose and human-readable information can be shown with `-v` or `--verbose`:
 
-        $ ./NonSemVer.sh -i -v 01.42.5069-3
-        14250690003
+      $ ./NonSemVer.sh -v 01.42.5069-3
+      01.42.5069-0003
 
-        Project ID:     01
-        Deployment:     2042
-        Minor:          50
-        Bugfix:         69
-        Build:          0003
+      Project ID:     01
+      Deployment:     2042
+      Minor:          50
+      Bugfix:         69
+      Build:          0003
 
-- When running in a Git repository, automatically fetch the latest tag as version identifier:
+### Version Manipulation
 
-        $ git tag
-        1.2.30
-        $ ./NonSemVer.sh
-        01.02.0030
+- Version numbers can be incremented with respect to the current year (e.g. 2023):
 
-- Increment version numbers (with respect to the current year, e.g. 2023):
+      $ ./NonSemVer.sh --bump-minor 11.23.0607
+      11.23.0700
+      $ ./NonSemVer.sh --bump-bugfix 11.23.0607
+      11.23.0608
+      $ ./NonSemVer.sh --bump-minor 11.20.1234
+      11.23.0100
 
-        $ ./NonSemVer.sh --bump-minor 11.23.0607
-        11.23.0700
-        $ ./NonSemVer.sh --bump-bugfix 11.23.0607
-        11.23.0608
-        $ ./NonSemVer.sh --bump-minor 11.20.1234
-        11.23.0100
+- Specific versions for testing can be created by request:
 
-- Create a specific version for testing:
-
-        $ ./NonSemVer.sh 11.22.3344 --test 5566
-        11.22.3355-4466
-        $ ./NonSemVer.sh 11.22.3344 -i --test 789
-        112233074489
+      $ ./NonSemVer.sh 11.22.3344 --test 5566
+      11.22.3355-4466
+      $ ./NonSemVer.sh 11.22.3344 -i --test 789
+      112233074489
 
   Note that this will always output a build number.
 
-Run `./NonSemVer.sh --help` or take a look at the unit tests to see all available options.
+### Native git Integration
+
+- When running inside a Git repository, the latest tag will be fetched as version argument:
+
+      $ git tag -l
+      1.2.30
+      $ ./NonSemVer.sh
+      01.02.0030
