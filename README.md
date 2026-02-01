@@ -25,18 +25,18 @@ This makes it ideal for use in CI pipelines and other automation workflows.
 
 - Parse version tags in dot-style or integer notation:
 
-        $ ./NonSemVer.sh v12.34.5678        # dot-style with leading 'v'
-        12.34.5678
-        $ ./NonSemVer.sh 98.76.5432         # dot style as is
-        98.76.5432
-        $ ./NonSemVer.sh 24681012           # integer format
-        24.68.1012
-        $ ./NonSemVer.sh 1.2.3-4            # abbreviated dot-style
-        01.02.0003-0004
-        $ ./NonSemVer.sh 112233445566       # long numeric representation
-        11.22.3344-5566
+      $ ./NonSemVer.sh 12.34.5678         # dot-style
+      12.34.5678
+      $ ./NonSemVer.sh v98.76.5432        # dot style with leading 'v'
+      98.76.5432
+      $ ./NonSemVer.sh 24681012           # integer format
+      24.68.1012
+      $ ./NonSemVer.sh 1.2.3-4            # abbreviated dot-style with build sequence number
+      01.02.0003-0004
+      $ ./NonSemVer.sh v112233445566      # integer format with build sequence and 'v'
+      11.22.3344-5566
 
-  Note that a version's build numbers is optional and will be printed only if provided.
+  Note that a version's build sequence is optional and will be only printed if specified.
 
 - Return bare integer version tags with `-i` or `--integer`:
 
@@ -79,6 +79,6 @@ This makes it ideal for use in CI pipelines and other automation workflows.
         $ ./NonSemVer.sh 11.22.3344 -i --synthetic 789
         112233074489
 
-  Note that this will always output a build number.
+  Note that this will always output the build sequence number.
 
 Run `./NonSemVer.sh --help` or take a look at the unit tests to see all available options.
