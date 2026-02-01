@@ -9,5 +9,4 @@ assert_eq "$($NONSEMVER --test "123456" "00.00.0000")"  "00.00.0012-0034"   "Lon
 
 # Check handling of misformed arguments
 $NONSEMVER --test ""   "00.00.0000" &>/dev/null;    assert_not_eq "$?" "0"  "No test version argument"
-
 $NONSEMVER --test "1a" "00.00.0000" &>/dev/null;    assert_not_eq "$?" "0"  "Invalid test version argument"

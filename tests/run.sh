@@ -6,8 +6,7 @@ export NONSEMVER
 
 source "$dir/util/assert/assert.sh"
 
-# Run all unit test files
-set -e
+set +e   # Don't die on intentional errors
 for file in "$dir"/*.test.sh; do
    source "$file"
 done
