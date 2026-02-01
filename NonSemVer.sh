@@ -113,9 +113,9 @@ echo "$output"
 # Verbose output
 if $VERBOSE; then
     echo ""
-    printf "Version prefix:\t\t%02d\n" "$prefix"
+    printf "Version prefix:\t\t%d\n" "$prefix"
     printf "Cycle identifier:\t20%02d\n" "$cycle"
-    printf "Minor component:\t%02d\n" "$minor"
-    printf "Bugfix component:\t%02d\n" "$bugfix"
-    printf "Build sequence:\t\t%04d\n" "${build:-0}"
+    printf "Minor component:\t%d\n" "$minor"
+    printf "Bugfix component:\t%d\n" "$bugfix"
+    printf "Build sequence:\t\t%d\n" "${build:-0}"
 fi
