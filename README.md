@@ -30,7 +30,7 @@ tests.
 
 ### Parsing and Output
 
-- Version tags can be parsed in both dot-style and integer notation:
+- Version tags can be parsed both from dot-style and integer notation:
 
       $ ./NonSemVer.sh 12.34.5678         # dot-style
       12.34.5678
@@ -38,14 +38,14 @@ tests.
       98.76.5432
       $ ./NonSemVer.sh 24681012           # integer format
       24.68.1012
-      $ ./NonSemVer.sh 1.2.3-4            # abbreviated dot-style
+      $ ./NonSemVer.sh 1.2.3-4            # abbreviated dot-style with build number
       01.02.0003-0004
-      $ ./NonSemVer.sh 112233445566       # long numeric representation
+      $ ./NonSemVer.sh v112233445566      # integer format with build number and 'v'
       11.22.3344-5566
 
-  Note that a version's build number is optional and will be printed only if specified.
+  Note that a version's build number is optional and will be only printed if specified.
 
-- Bare integer versions can be printed `-i` or `--integer`:
+- Bare integer versions can be printed with `-i` or `--integer`:
 
       $ ./NonSemVer.sh -i 00.00.0005
       5
@@ -57,11 +57,11 @@ tests.
       $ ./NonSemVer.sh -v 01.42.5069-3
       01.42.5069-0003
 
-      Project ID:     01
+      Project ID:     1
       Deployment:     2042
       Minor:          50
       Bugfix:         69
-      Build:          0003
+      Build:          3
 
 ### Version Manipulation
 
@@ -74,12 +74,14 @@ tests.
       $ ./NonSemVer.sh --bump-minor 11.20.1234
       11.23.0100
 
-- Specific versions for testing can be created by request:
+- Specific versions for testing can be created upon request:
 
-      $ ./NonSemVer.sh 11.22.3344 --test 5566
-      11.22.3355-4466
-      $ ./NonSemVer.sh 11.22.3344 -i --test 789
-      112233074489
+      $ ./NonSemVer.sh 11.22.3344
+      11.22.3344
+      $ ./NonSemVer.sh 11.22.3344 --test 8899
+      11.22.3388-4499
+      $ ./NonSemVer.sh 11.22.3344 --test 709 -i
+      112233074409
 
   Note that this will always output a build number.
 

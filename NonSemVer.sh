@@ -113,9 +113,9 @@ echo "$output"
 # Verbose output
 if $VERBOSE; then
     echo ""
-    printf "Project ID:\t%02d\n" "$prefix"
+    printf "Project ID:\t%d\n" "$prefix"
     printf "Major:\t\t20%02d\n" "$major"
-    printf "Minor:\t\t%02d\n" "$minor"
-    printf "Bugfix:\t\t%02d\n" "$bugfix"
-    printf "Build:\t\t%04d\n" "$build"
+    printf "Minor:\t\t%d\n" "$minor"
+    printf "Bugfix:\t\t%d\n" "$bugfix"
+    printf "Build:\t\t%d\n" "$build"
 fi
