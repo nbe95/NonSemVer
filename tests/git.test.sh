@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Delete existing test tag
 git tag -d "99.42.69" &> /dev/null || true
 
