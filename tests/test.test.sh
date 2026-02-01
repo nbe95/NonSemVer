@@ -8,8 +8,6 @@ assert_eq "$($NONSEMVER --test "1"      "77.77.8888")"  "77.77.8800-8801"   "Ver
 assert_eq "$($NONSEMVER --test "123456" "00.00.0000")"  "00.00.0012-0034"   "Long test version"
 
 # Check handling of misformed arguments
-echo "debug:$($NONSEMVER --test ""   "00.00.0000")"
-echo "debug:$($NONSEMVER --test "1a"   "00.00.0000")"
+$NONSEMVER --test ""   "00.00.0000" &>/dev/null;    assert_not_eq "$?" "0"  "No test version argument"
 
-assert_not_eq "$($NONSEMVER --test ""   "00.00.0000" &>/dev/null)$?" "0"    "No test version argument"
-assert_not_eq "$($NONSEMVER --test "1a" "00.00.0000" &>/dev/null)$?" "0"    "Invalid test version argument"
+$NONSEMVER --test "1a" "00.00.0000" &>/dev/null;    assert_not_eq "$?" "0"  "Invalid test version argument"

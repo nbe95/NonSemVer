@@ -24,4 +24,4 @@ assert_eq "$($NONSEMVER --bump-bugfix   "78.$cy.9012"   )" "78.$cy.9013"    "Reg
 
 # Check exceeding of numerical limits
 assert_eq "$($NONSEMVER --bump-bugfix   "00.$cy.5599"   )" "00.$cy.5600"    "Overflow after bugfix bump"
-assert_eq "$($NONSEMVER --bump-minor    "12.34.9956" &>/dev/null)$?" "3"    "No more minor versions available"
+$NONSEMVER --bump-minor "12.34.9956" &>/dev/null;   assert_eq "$?" "3"      "No more minor versions available"
