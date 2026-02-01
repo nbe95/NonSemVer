@@ -4,25 +4,27 @@
 set -e
 
 usage() {
-    echo "Usage: $(basename "$0") [-h|--help] [-v|--verbose] [-i|--integer] [--bump-minor|--bump-bugfix] [--synthetic ID] [VERSION]" 1>&2;
+    echo "Usage: $(basename "$0") [-h|--help] [-v|--verbose] [-i|--integer] [-c|--cycle YY] [--minor|--bugfix] [--synthetic XXXX] [VERSION]" 1>&2;
     exit 0;
 }
 
-# Parse argument options
+# Parse CLI arguments
 VERBOSE=false
 INTEGER=false
+CURRENT_CYCLE="$(date +%y)"
 BUMP_MINOR=false
 BUMP_BUGFIX=false
 SYNTHETIC=0
 while true; do
   case "$1" in
-    -h | --help ) usage;;
-    -v | --verbose ) VERBOSE=true; shift;;
-    -i | --integer ) INTEGER=true; shift;;
-    --bump-minor ) BUMP_MINOR=true; shift;;
-    --bump-bugfix ) BUMP_BUGFIX=true; shift;;
-    --synthetic ) SYNTHETIC="$(printf "%04d" "${2:0:4}")"; shift; shift;;
-    * ) break;;
+    -h | --help)        usage;;
+    -v | --verbose)     VERBOSE=true; shift;;
+    -i | --integer)     INTEGER=true; shift;;
+    -c | --cycle)       CURRENT_CYCLE="$((10#$(printf "%02d" "${2:0:2}")))"; shift; shift;;
+    --minor)            BUMP_MINOR=true; shift;;
+    --bugfix)           BUMP_BUGFIX=true; shift;;
+    --synthetic)        SYNTHETIC="$(printf "%04d" "${2:0:4}")"; shift; shift;;
+    *) break;;
   esac
 done
 
@@ -68,10 +70,9 @@ bugfix=$((minor_bugfix % 100))
 
 # Perform version bump if requested
 if $BUMP_MINOR || $BUMP_BUGFIX; then
-    current="$(date +"%y")"
-    if (( "$cycle" < "$current" )); then
+    if (( "$cycle" < "$CURRENT_CYCLE" )); then
         # Cycle ID has changed -> reset all
-        cycle="$current"
+        cycle="$CURRENT_CYCLE"
         minor=1
         bugfix=0
     elif $BUMP_MINOR; then

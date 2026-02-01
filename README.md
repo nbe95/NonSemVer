@@ -23,10 +23,10 @@ The version format is defined as follows:
 
 ## Features and Examples
 
-> All CLI options listed below can be combined unless stated otherwise.
-
 For a complete list of available options, run `NonSemVer.sh --help` or take a look at the unit
 tests.
+
+> All CLI options listed below can be combined unless stated otherwise.
 
 ### Parsing and Output
 
@@ -65,14 +65,19 @@ tests.
 
 ### Version Manipulation
 
-- Version numbers can be incremented with respect to the current year (e.g. 2023):
+- Version numbers can be incremented with respect to the current cycle. If not specified, the
+  current year's last 2 digits are taken as cycle number (e.g. for 2020):
 
-      $ ./NonSemVer.sh --bump-minor 11.23.0607
-      11.23.0700
-      $ ./NonSemVer.sh --bump-bugfix 11.23.0607
-      11.23.0608
-      $ ./NonSemVer.sh --bump-minor 11.20.1234
-      11.23.0100
+      $ ./NonSemVer.sh --minor 00.20.1234
+      00.20.1300
+      $ ./NonSemVer.sh --bugfix 00.20.1234
+      00.20.1235
+      $ ./NonSemVer.sh --minor 00.19.1234
+      00.20.0100
+      $ ./NonSemVer.sh --bugfix 00.19.1234
+      00.20.0100
+      $ ./NonSemVer.sh --cycle 19 --minor 00.19.1234
+      00.19.1300
 
 - Derive a synthetic version format by shifting decimal places:
 
@@ -83,11 +88,11 @@ tests.
       $ ./NonSemVer.sh 11.22.3344 --synthetic 709 -i
       112233074409
 
-  Note that this will always output the build sequence number.
+  Note that with synthetic versions, the output will _always_ contain build sequence numbers.
 
 ### Native git Integration
 
-- When running inside a Git repository, the latest tag will be fetched as version argument:
+- When running inside a git repository, the latest tag will be fetched as version argument:
 
       $ git tag -l
       1.2.30
