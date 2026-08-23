@@ -84,8 +84,8 @@ if $BUMP_MINOR || $BUMP_BUGFIX; then
         bugfix="$((bugfix + 1))"
     fi
 
-    # Bump minor version if bugfix version > 97, since 98/99 are reserved for special cases
-    if [ "$bugfix" -gt 97 ]; then
+    # Bump minor version if bugfix version >= 97, since 97-99 are reserved for special cases
+    if [ "$bugfix" -ge 97 ]; then
         minor="$((minor + 1))"
         bugfix=0
     fi
